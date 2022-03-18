@@ -559,3 +559,27 @@ grafana.ini:
   alerting:
     enabled: false
 ```
+
+export KUBECONFIG=/Users/wewer/.kube/master/etc/kubernetes/admin.conf
+
+in 
+./charts/grafana/values.yaml
+./charts/grafana/_pod.tpl
+3000 gegen 3001 getauscht
+und in ./charts/grafana/values.yaml:
+grafana.ini:
+  server:
+    http_port: 3001
+
+
+helm install grafana ./charts/grafana -n kube-system --dry-run
+helm uninstall grafana -n kube-system
+
+kubectl get secret --namespace kube-system grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+admin
+sw1VHQ3CN9sMPknRaoV6el5XMu0lPiW7ozSwkYzB
+
+export POD_NAME=$(kubectl get pods --namespace kube-system -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
+-> POD_NAME=grafana-5798f4c6d9-hvf2g
+
+kubectl --namespace kube-system port-forward $POD_NAME 3001

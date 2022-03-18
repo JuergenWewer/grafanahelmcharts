@@ -56,12 +56,12 @@ deploymentStrategy:
 readinessProbe:
   httpGet:
     path: /api/health
-    port: 3000
+    port: 3001
 
 livenessProbe:
   httpGet:
     path: /api/health
-    port: 3000
+    port: 3001
   initialDelaySeconds: 60
   timeoutSeconds: 30
   failureThreshold: 10
@@ -148,7 +148,7 @@ service:
   enabled: true
   type: ClusterIP
   port: 80
-  targetPort: 3000
+  targetPort: 3001
     # targetPort: 4181 To be used with a proxy extraContainer
   annotations: {}
   labels: {}
@@ -256,7 +256,7 @@ extraContainers: ""
 #   - -email-domain=*
 #   - -cookie-secret=
 #   - -http-address=http://0.0.0.0:4181
-#   - -upstream-url=http://127.0.0.1:3000
+#   - -upstream-url=http://127.0.0.1:3001
 #   ports:
 #     - name: proxy-web
 #       containerPort: 4181
@@ -561,6 +561,8 @@ grafana.ini:
     mode: console
   grafana_net:
     url: https://grafana.net
+  server:
+    http_port: 3001
 ## grafana Authentication can be enabled with the following values on grafana.ini
  # server:
       # The full public facing url you use in browser, used for redirects and emails
@@ -703,7 +705,7 @@ sidecar:
     # search in configmap, secret or both
     resource: both
     # Endpoint to send request to reload datasources
-    reloadURL: "http://localhost:3000/api/admin/provisioning/datasources/reload"
+    reloadURL: "http://localhost:3001/api/admin/provisioning/datasources/reload"
     skipReload: false
     # Deploy the datasource sidecar as an initContainer in addition to a container.
     # This is needed if skipReload is true, to load any datasources defined at startup time.
@@ -723,7 +725,7 @@ sidecar:
     # search in configmap, secret or both
     resource: both
     # Endpoint to send request to reload plugins
-    reloadURL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
+    reloadURL: "http://localhost:3001/api/admin/provisioning/plugins/reload"
     skipReload: false
     # Deploy the datasource sidecar as an initContainer in addition to a container.
     # This is needed if skipReload is true, to load any plugins defined at startup time.
