@@ -577,7 +577,7 @@ helm uninstall grafana -n kube-system
 
 kubectl get secret --namespace kube-system grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 admin
-sw1VHQ3CN9sMPknRaoV6el5XMu0lPiW7ozSwkYzB
+
 
 export POD_NAME=$(kubectl get pods --namespace kube-system -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana" -o jsonpath="{.items[0].metadata.name}")
 -> POD_NAME=grafana-5798f4c6d9-hvf2g
